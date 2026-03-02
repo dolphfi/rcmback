@@ -22,9 +22,9 @@ import { Public } from '../auth/decorators/public.decorator';
 @UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class RolesController {
-  constructor(private readonly rolesService: RolesService) {}
+  constructor(private readonly rolesService: RolesService) { }
 
-  // @Public()
+  @Public()
   @Post('add-role')
   @Roles('SUPER_ADMIN')
   @ApiOperation({ summary: 'Créer un nouveau rôle (Super Admin seulement)' })
