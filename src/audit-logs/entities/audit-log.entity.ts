@@ -17,6 +17,7 @@ export enum AuditAction {
   FAILED_LOGIN = 'FAILED_LOGIN',
   UNLOCK_ACCOUNT = 'UNLOCK_ACCOUNT',
   MAINTENANCE_TOGGLE = 'MAINTENANCE_TOGGLE',
+  // good
 }
 
 @Entity('audit_logs')
