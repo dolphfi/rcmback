@@ -117,7 +117,7 @@ export class EmailService {
   ) {
     try {
       // Fetch business name from settings
-      let companyName = 'LAVIDIß';
+      let companyName = 'LAVIDI';
       try {
         const businessNameSetting = await this.settingsService.findOneByKey(
           SettingKey.BUSINESS_NAME,
