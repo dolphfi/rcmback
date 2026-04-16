@@ -16,7 +16,7 @@ import { SettingKey } from '../utility/common/enum/setting-keys.enum';
 export class EmailService {
   private readonly logger = new Logger(EmailService.name);
   private readonly resend: Resend;
-  private readonly fromAddress = 'LAVIDI <support@lavidiml.com>';
+  private readonly fromAddress = 'KOLABO POS <support@kolabotech.com>';
 
   constructor(
     private readonly configService: ConfigService,
@@ -117,7 +117,7 @@ export class EmailService {
   ) {
     try {
       // Fetch business name from settings
-      let companyName = 'LAVIDI';
+      let companyName = 'KOLABO TECH';
       try {
         const businessNameSetting = await this.settingsService.findOneByKey(
           SettingKey.BUSINESS_NAME,
