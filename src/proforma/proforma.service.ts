@@ -105,7 +105,15 @@ export class ProformaService {
 
   async findAll() {
     return this.proformaRepository.find({
-      relations: ['items', 'pos', 'createdBy', 'customer'],
+      relations: [
+        'items',
+        'items.service',
+        'items.service.category',
+        'items.product',
+        'pos',
+        'createdBy',
+        'customer',
+      ],
       order: { createdAt: 'DESC' },
     });
   }
@@ -113,7 +121,15 @@ export class ProformaService {
   async findOne(id: string) {
     const proforma = await this.proformaRepository.findOne({
       where: { id },
-      relations: ['items', 'pos', 'createdBy', 'customer'],
+      relations: [
+        'items',
+        'items.service',
+        'items.service.category',
+        'items.product',
+        'pos',
+        'createdBy',
+        'customer',
+      ],
     });
     if (!proforma) throw new NotFoundException(`Devis #${id} pa jwenn`);
     return proforma;
