@@ -4,6 +4,8 @@ import {
   Post,
   Body,
   Param,
+  Patch,
+  Query,
   UseGuards,
   Req,
 } from '@nestjs/common';
@@ -36,5 +38,20 @@ export class SalesController {
   @ApiOperation({ summary: "Détails d'une vente" })
   findOne(@Param('id') id: string) {
     return this.salesService.findOne(id);
+  }
+
+  @Get('credits/all')
+  @ApiOperation({ summary: 'Lister les ventes à crédit non payées' })
+  findCredits() {
+    return this.salesService.findCredits();
+  }
+
+  @Patch(':id/pay')
+  @ApiOperation({ summary: 'Enregistrer un paiement pour une vente à crédit' })
+  markAsPaid(
+    @Param('id') id: string,
+    @Body('amount') amount?: number,
+  ) {
+    return this.salesService.markAsPaid(id, amount);
   }
 }

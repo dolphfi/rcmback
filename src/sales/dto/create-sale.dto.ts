@@ -62,4 +62,9 @@ export class CreateSaleDto {
   @IsOptional()
   @IsNumber()
   discount?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  amountPaid?: number;
 }

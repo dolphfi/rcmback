@@ -23,6 +23,7 @@ export enum PaymentMethod {
   CARD = 'CARD',
   SCAN = 'SCAN',
   SPLIT = 'SPLIT',
+  CREDIT = 'CREDIT',
 }
 
 export enum SaleStatus {
@@ -85,6 +86,12 @@ export class Sale {
 
   @Column({ type: 'decimal', precision: 12, scale: 2, default: 0 })
   total: number;
+
+  @Column({ default: true })
+  isPaid: boolean;
+
+  @Column({ type: 'decimal', precision: 12, scale: 2, default: 0 })
+  amountPaid: number;
 
   @Column({
     type: 'enum',

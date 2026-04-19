@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
-import { Sale, SaleStatus } from './entities/sale.entity';
+import { Sale, SaleStatus, PaymentMethod } from './entities/sale.entity';
 import { SaleItem } from './entities/sale-item.entity';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { PricingStock } from '../products/entities/pricing-stock.entity';
@@ -102,6 +102,13 @@ export class SalesService {
             const discount = createSaleDto.discount || 0;
             const total = subtotal + tax - discount;
 
+            // Handle amountPaid and isPaid
+            const amountPaid = createSaleDto.amountPaid !== undefined
+                ? Number(createSaleDto.amountPaid)
+                : (createSaleDto.paymentMethod === PaymentMethod.CREDIT ? 0 : total);
+
+            const isPaid = amountPaid >= total;
+
             const sale = this.saleRepository.create({
                 ...createSaleDto,
                 receiptNumber,
@@ -110,6 +117,8 @@ export class SalesService {
                 tax,
                 discount,
                 total,
+                amountPaid,
+                isPaid,
                 status: SaleStatus.COMPLETED,
                 items,
             });
@@ -172,5 +181,35 @@ export class SalesService {
         });
         if (!sale) throw new NotFoundException(`Lavant #${id} pa jwenn`);
         return sale;
+    }
+
+    /**
+     * Liste des ventes à crédit non payées
+     */
+    async findCredits() {
+        return this.saleRepository.find({
+            where: {
+                paymentMethod: 'CREDIT' as any,
+                isPaid: false,
+            },
+            relations: ['customer', 'cashier', 'pos'],
+            order: { createdAt: 'DESC' },
+        });
+    }
+
+    /**
+     * Enregistrer un paiement pour une vente à crédit
+     */
+    async markAsPaid(id: string, amount?: number) {
+        const sale = await this.findOne(id);
+
+        if (amount !== undefined) {
+            sale.amountPaid = Number(sale.amountPaid) + Number(amount);
+        } else {
+            sale.amountPaid = sale.total;
+        }
+
+        sale.isPaid = Number(sale.amountPaid) >= Number(sale.total);
+        return this.saleRepository.save(sale);
     }
 }

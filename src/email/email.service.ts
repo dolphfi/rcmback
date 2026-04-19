@@ -16,7 +16,7 @@ import { SettingKey } from '../utility/common/enum/setting-keys.enum';
 export class EmailService {
   private readonly logger = new Logger(EmailService.name);
   private readonly resend: Resend;
-  private readonly fromAddress = 'KOLABO POS <support@kolabotech.com>';
+  private readonly fromAddress = 'Réseau Cellulaire <reseaucelulare@kolabotech.com>';
 
   constructor(
     private readonly configService: ConfigService,
