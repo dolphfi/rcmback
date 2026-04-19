@@ -1,5 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsOptional,
   IsPhoneNumber,
   IsString,
@@ -53,4 +54,9 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   posId?: string;
+
+  @ApiPropertyOptional({ example: false, description: "Statut actif de l'utilisateur" })
+  @IsOptional()
+  @IsBoolean()
+  isActive?: boolean;
 }

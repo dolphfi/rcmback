@@ -32,6 +32,24 @@ export class PricingStockDto {
   @Min(0)
   price: number;
 
+  @ApiProperty({ example: 85.0, required: false })
+  @IsNumber()
+  @Min(0)
+  @IsOptional()
+  wholesalePrice?: number;
+
+  @ApiProperty({ example: 75.0, required: false })
+  @IsNumber()
+  @Min(0)
+  @IsOptional()
+  grandDealerPrice?: number;
+
+  @ApiProperty({ example: 80.0, required: false })
+  @IsNumber()
+  @Min(0)
+  @IsOptional()
+  smallDealerPrice?: number;
+
   @ApiProperty({ example: 80.0, required: false })
   @IsNumber()
   @Min(0)

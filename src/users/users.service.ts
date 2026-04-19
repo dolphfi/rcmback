@@ -192,7 +192,8 @@ export class UsersService {
     }
 
     this.userRepository.merge(user, updateUserDto);
-    return this.userRepository.save(user);
+    await this.userRepository.save(user);
+    return this.userRepository.findOne({ where: { id } }) as Promise<User>;
   }
 
   async remove(id: string): Promise<void> {
