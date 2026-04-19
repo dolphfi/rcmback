@@ -24,9 +24,9 @@ import { Public } from '../auth/decorators/public.decorator';
 export class RolesController {
   constructor(private readonly rolesService: RolesService) { }
 
-  @Public()
+  // @Public()
   @Post('add-role')
-  // @Roles('SUPER_ADMIN')
+  @Roles('SUPER_ADMIN')
   @ApiOperation({ summary: 'Créer un nouveau rôle (Super Admin seulement)' })
   create(@Body() createRoleDto: CreateRoleDto) {
     return this.rolesService.create(createRoleDto);
