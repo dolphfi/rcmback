@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Request,
+  ForbiddenException,
   InternalServerErrorException,
   BadRequestException,
   UnauthorizedException,
@@ -283,7 +284,10 @@ export class UsersController {
   @ApiResponse({ status: 403, description: 'Accès refusé (rôle insuffisant).' })
   @ApiResponse({ status: 404, description: 'Utilisateur non trouvé.' })
   @Roles('SUPER_ADMIN')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto, @Request() req: any) {
+    if (req.user.id === id) {
+      throw new ForbiddenException('Ou pa ka modifye pwòp kont ou a.');
+    }
     return this.userService.update(id, updateUserDto);
   }
 
@@ -302,7 +306,10 @@ export class UsersController {
   @ApiResponse({ status: 403, description: 'Accès refusé (rôle insuffisant).' })
   @ApiResponse({ status: 404, description: 'Utilisateur non trouvé.' })
   @Roles('SUPER_ADMIN')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string, @Request() req: any) {
+    if (req.user.id === id) {
+      throw new ForbiddenException('Ou pa ka siprime pwòp kont ou a.');
+    }
     return this.userService.remove(id);
   }
 
@@ -322,6 +329,9 @@ export class UsersController {
   @ApiResponse({ status: 404, description: 'Utilisateur non trouvé' })
   @ApiBearerAuth()
   async unlockAccount(@Param('id') userId: string, @Request() req: any) {
+    if (req.user.id === userId) {
+      throw new ForbiddenException('Ou pa ka debloke pwòp kont ou a.');
+    }
     return this.userService.unlockAccount(userId, req.user.id);
   }
 }
