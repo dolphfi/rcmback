@@ -9,6 +9,7 @@ import {
   Min,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 
 export class CreateCustomerDto {
   @ApiProperty({ example: 'John', description: 'Prénom du client' })
@@ -28,6 +29,7 @@ export class CreateCustomerDto {
   })
   @IsEmail()
   @IsOptional()
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() || null : value))
   email?: string;
 
   @ApiProperty({
@@ -37,6 +39,7 @@ export class CreateCustomerDto {
   })
   @IsString()
   @IsOptional()
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() || null : value))
   phone?: string;
 
   @ApiProperty({
@@ -46,6 +49,7 @@ export class CreateCustomerDto {
   })
   @IsString()
   @IsOptional()
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() || null : value))
   address?: string;
 
   @ApiProperty({ example: 0, description: 'Points de fidélité', default: 0 })
