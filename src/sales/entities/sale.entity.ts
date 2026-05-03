@@ -100,6 +100,9 @@ export class Sale {
   })
   status: SaleStatus;
 
+  @Column({ type: 'timestamp', nullable: true })
+  dueDate: Date;
+
   @OneToMany(() => SaleItem, (item) => item.sale, { cascade: true })
   items: SaleItem[];
 

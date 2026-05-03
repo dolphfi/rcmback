@@ -813,6 +813,32 @@ export class ReportsService {
     }).sort((a, b) => b.totalSales - a.totalSales);
   }
 
+  async getSalesByProductAndPos(startDate?: string, endDate?: string) {
+    const qb = this.saleItemRepository.createQueryBuilder('si')
+      .innerJoin('si.product', 'p')
+      .innerJoin('si.sale', 's')
+      .innerJoin('s.pos', 'pos')
+      .select([
+        'p.id as productId',
+        'p.name as productName',
+        'pos.id as posId',
+        'pos.name as posName',
+        'SUM(si.qty) as totalQty',
+        'SUM(si.total) as totalAmount'
+      ])
+      .where('s.status = :status', { status: SaleStatus.COMPLETED });
+
+    if (startDate && endDate) {
+      if (startDate === endDate || (startDate.includes(' ') && startDate.split(' ')[0] === endDate.split(' ')[0])) {
+        qb.andWhere('DATE(s.createdAt) = DATE(:startDate)', { startDate });
+      } else {
+        qb.andWhere('s.createdAt >= :startDate AND s.createdAt <= :endDate', { startDate, endDate });
+      }
+    }
+
+    return await qb.groupBy('p.id, pos.id').orderBy('p.name', 'ASC').getRawMany();
+  }
+
   async getSalesDates() {
     const dates = await this.saleRepository
       .createQueryBuilder('sale')

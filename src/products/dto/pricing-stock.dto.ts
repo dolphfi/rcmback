@@ -48,12 +48,6 @@ export class PricingStockDto {
   @IsNumber()
   @Min(0)
   @IsOptional()
-  smallDealerPrice?: number;
-
-  @ApiProperty({ example: 80.0, required: false })
-  @IsNumber()
-  @Min(0)
-  @IsOptional()
   costPrice?: number;
 
   @ApiProperty({ example: 'inclusive', required: false })

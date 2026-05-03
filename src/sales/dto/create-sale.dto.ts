@@ -8,6 +8,7 @@ import {
   ValidateNested,
   IsArray,
   Min,
+  IsDateString,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { SellType, PaymentMethod } from '../entities/sale.entity';
@@ -67,4 +68,8 @@ export class CreateSaleDto {
   @IsNumber()
   @Min(0)
   amountPaid?: number;
+
+  @IsOptional()
+  @IsDateString()
+  dueDate?: string;
 }

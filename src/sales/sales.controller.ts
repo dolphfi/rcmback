@@ -13,6 +13,8 @@ import { SalesService } from './sales.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { Public } from '../auth/decorators/public.decorator';
+import { SkipMaintenance } from '../utility/decorators/skip-maintenance.decorator';
 
 @ApiTags('Sales')
 @Controller('sales')
@@ -38,6 +40,14 @@ export class SalesController {
   @ApiOperation({ summary: "Détails d'une vente" })
   findOne(@Param('id') id: string) {
     return this.salesService.findOne(id);
+  }
+
+  @Public()
+  @SkipMaintenance()
+  @Get('public/:receiptNo')
+  @ApiOperation({ summary: "Détails d'une vente par numéro de reçu (Public)" })
+  findByReceiptNo(@Param('receiptNo') receiptNo: string) {
+    return this.salesService.findByReceiptNo(receiptNo);
   }
 
   @Get('credits/all')

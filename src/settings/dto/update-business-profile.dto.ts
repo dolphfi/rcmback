@@ -41,4 +41,9 @@ export class UpdateBusinessProfileDto {
     @IsOptional()
     @IsString()
     RECEIPT_FOOTER_MESSAGE?: string;
+
+    @ApiProperty({ example: '130.5', required: false })
+    @IsOptional()
+    @IsString()
+    EXCHANGE_RATE?: string;
 }

@@ -252,6 +252,13 @@ export class SettingsService {
           case 'RECEIPT_FOOTER_MESSAGE':
             label = 'Message pied de page';
             break;
+          case 'EXCHANGE_RATE':
+            label = 'Taux de change (USD -> HTG)';
+            break;
+          case 'BUSINESS_BANK_INFO':
+            label = 'Enfòmasyon Bankè';
+            description = 'Lis kont bankè biznis lan (JSON)';
+            break;
         }
 
         const updated = await this.updateByKey(key as SettingKey, {

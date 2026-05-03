@@ -212,4 +212,16 @@ export class SalesService {
         sale.isPaid = Number(sale.amountPaid) >= Number(sale.total);
         return this.saleRepository.save(sale);
     }
+
+    /**
+     * Trouver une vente par son numéro de reçu
+     */
+    async findByReceiptNo(receiptNo: string) {
+        const sale = await this.saleRepository.findOne({
+            where: { receiptNumber: receiptNo },
+            relations: ['items', 'pos', 'cashier', 'customer'],
+        });
+        if (!sale) throw new NotFoundException(`Lavant #${receiptNo} pa jwenn`);
+        return sale;
+    }
 }

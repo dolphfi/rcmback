@@ -28,9 +28,6 @@ export class PricingStock {
     grandDealerPrice: number;
 
     @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
-    smallDealerPrice: number;
-
-    @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
     costPrice: number;
 
     @Column({ nullable: true })

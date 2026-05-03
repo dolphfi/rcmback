@@ -79,4 +79,13 @@ export class ReportsController {
   getSalesDates() {
     return this.reportsService.getSalesDates();
   }
+
+  @Get('sales-by-product-pos')
+  @ApiOperation({ summary: 'Obtenir les ventes par produit et par point de vente' })
+  getSalesByProductPos(
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    return this.reportsService.getSalesByProductAndPos(startDate, endDate);
+  }
 }

@@ -25,6 +25,7 @@ import { ReportsModule } from './reports/reports.module';
 import { AuditLogsModule } from './audit-logs/audit-logs.module';
 import { AuditLogInterceptor } from './utility/common/interceptors/audit-log.interceptor';
 import { PromotionsModule } from './promotions/promotions.module';
+import { ExpensesModule } from './expenses/expenses.module';
 
 @Module({
   imports: [
@@ -78,6 +79,7 @@ import { PromotionsModule } from './promotions/promotions.module';
     ReportsModule,
     AuditLogsModule,
     PromotionsModule,
+    ExpensesModule,
   ],
   controllers: [],
   providers: [
