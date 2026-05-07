@@ -27,10 +27,11 @@ export class PricingStockDto {
   @IsOptional()
   sku?: string;
 
-  @ApiProperty({ example: 99.99 })
+  @ApiProperty({ example: 99.99, required: false })
   @IsNumber()
   @Min(0)
-  price: number;
+  @IsOptional()
+  price?: number;
 
   @ApiProperty({ example: 85.0, required: false })
   @IsNumber()
