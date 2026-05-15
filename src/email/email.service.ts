@@ -233,7 +233,7 @@ export class EmailService {
   ) {
     const frontendUrl =
       this.configService.get<string>('FRONTEND_URL') || 'http://localhost:3000';
-    const loginLink = `${frontendUrl}/login`;
+    const loginLink = `${frontendUrl}/`;
     const currentYear = new Date().getFullYear();
     const fullName = `${name.firstName || ''} ${name.lastName || ''}`.trim();
 
