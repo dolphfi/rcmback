@@ -102,7 +102,7 @@ export class EmailService {
       const fileContent = await fs.readFile(filePath, 'utf-8');
       const template = handlebars.compile(fileContent);
       return template(context);
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(`Error compiling template ${fileName}`, error);
       throw new Error(`Could not compile email template: ${fileName}`);
     }
@@ -143,13 +143,13 @@ export class EmailService {
       });
       this.logger.log(`[${errorContext}] Email sent successfully to ${to}`);
       return result;
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(
         `[${errorContext}] Failed to send email to ${to}`,
-        error.stack,
+        error?.stack,
       );
       throw new InternalServerErrorException(
-        `Failed to send email: ${error.message}`,
+        `Failed to send email: ${error?.message}`,
       );
     }
   }
@@ -279,13 +279,13 @@ export class EmailService {
         `[${errorContext}] Email with attachment sent successfully to ${to}`,
       );
       return result;
-    } catch (error) {
+    } catch (error: any) {
       this.logger.error(
         `[${errorContext}] Failed to send email with attachment to ${to}`,
-        error.stack,
+        error?.stack,
       );
       throw new InternalServerErrorException(
-        `Failed to send email with attachment: ${error.message}`,
+        `Failed to send email with attachment: ${error?.message}`,
       );
     }
   }
